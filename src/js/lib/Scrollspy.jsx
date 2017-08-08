@@ -28,7 +28,8 @@ export default class Scrollspy extends React.Component {
 		rootElement?: string,
 		className: string,
 		children?: *,
-		onChange?: (number, number) => void
+		onChange?: (number, number) => void,
+		limit?: number
 	};
 
 	static defaultProps = {
@@ -37,7 +38,8 @@ export default class Scrollspy extends React.Component {
 		style: {},
 		componentTag: "ul",
 		offset: 0,
-		className: ""
+		className: "",
+		limit: 100
 	};
 
 	state = {
@@ -49,8 +51,7 @@ export default class Scrollspy extends React.Component {
 
 	constructor(props: *) {
 		super(props);
-
-		this._throttled = throttle(() => this._spy(this.state.targetItems), 100);
+		this._throttled = throttle(() => this._spy(this.state.targetItems), props.limit);
 	}
 
 	_initSpyTarget(ids: string[]): HTMLElement[] {
