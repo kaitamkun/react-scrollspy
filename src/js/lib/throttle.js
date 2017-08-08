@@ -1,23 +1,22 @@
-const throttle = (fn, threshold = 100) => {
-  let last
-  let timer
+//@flow
 
-  return () => {
-    const now = +new Date()
-    const timePassed = !!last && (now < last + threshold)
+export default function throttle(fn: () => void, threshold: number = 100): () => void {
+	let last: number,
+		timer: number;
 
-    if (timePassed) {
-      clearTimeout(timer)
+	return () => {
+		const now: number = new Date().getTime();
 
-      timer = setTimeout(() => {
-        last = now
-        fn()
-      }, threshold)
-    } else {
-      last = now
-      fn()
-    }
-  }
+		if (last && (now < last + threshold)) {
+			clearTimeout(timer);
+
+			timer = setTimeout(() => {
+				last = now;
+				fn();
+			}, threshold);
+		} else {
+			last = now;
+			fn();
+		}
+	};
 }
-
-export default throttle
