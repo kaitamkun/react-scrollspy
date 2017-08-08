@@ -1,0 +1,12 @@
+[ignore]
+
+[include]
+src/js/lib/*
+
+[libs]
+
+[options]
+unsafe.enable_getters_and_setters=true
+suppress_comment=\\(.\\|\n\\)*\\$Flow\\(Issue\\|Ignore\\)
+
+[lints]
