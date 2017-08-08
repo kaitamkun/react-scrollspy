@@ -27,7 +27,8 @@ export default class Scrollspy extends React.Component {
 		offset: number,
 		rootElement?: string,
 		className: string,
-		children?: *
+		children?: *,
+		onChange?: (number, number) => void
 	};
 
 	static defaultProps = {
@@ -42,7 +43,8 @@ export default class Scrollspy extends React.Component {
 	state = {
 		targetItems: [],
 		inViewState: [],
-		isScrolledPast: []
+		isScrolledPast: [],
+		lastVisibleIndex: -1
 	};
 
 	constructor(props: *) {
@@ -138,6 +140,11 @@ export default class Scrollspy extends React.Component {
 				isInView = true;
 			}
 
+			const index = viewStatusList.length;
+			if (isInView && index != this.state.lastVisibleIndex) {
+				this._itemChanged(index, this.state.lastVisibleIndex);
+			}
+
 			viewStatusList.push(isInView);
 		}
 
@@ -147,6 +154,14 @@ export default class Scrollspy extends React.Component {
 			viewStatusList,
 			scrolledPast: this.props.scrolledPastClassName? this._getScrolledPast(viewStatusList) : []
 		};
+	}
+
+	_itemChanged(newIndex: number, oldIndex: number) {
+		if (this.props.onChange) {
+			this.props.onChange(newIndex, oldIndex);
+		}
+
+		this.setState({lastVisibleIndex: newIndex});
 	}
 
 	_isInView(element: HTMLElement): boolean {
