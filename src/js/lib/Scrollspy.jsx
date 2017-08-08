@@ -44,7 +44,7 @@ export default class Scrollspy extends React.Component {
 		targetItems: [],
 		inViewState: [],
 		isScrolledPast: [],
-		lastVisibleIndex: -1
+		lastVisibleIndex: 0
 	};
 
 	constructor(props: *) {
