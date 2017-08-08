@@ -102,11 +102,6 @@ export default class Scrollspy extends React.Component {
 		}
 
 		return {scrollTop: 0, scrollHeight: 0};
-
-		// return {
-		// 	scrollTop: document.documentElement.scrollTop || (document.body.parentNode.scrollTop: number) || document.body.scrollTop || 0,
-		// 	scrollHeight: document.documentElement.scrollHeight || (document.body.parentNode.scrollHeight: number) || document.body.scrollHeight || 0
-		// };
 	}
 
 	_getElemsViewState(targets: HTMLElement[]): ViewStateType {
@@ -219,17 +214,10 @@ export default class Scrollspy extends React.Component {
 		});
 	}
 
-	_handleSpy() {
-		this._throttled();
-	}
-
 	_initFromProps() {
 		const targetItems = this._initSpyTarget(this.props.items);
 
-		this.setState({
-			targetItems,
-		});
-
+		this.setState({targetItems});
 		this._spy(targetItems);
 	}
 
@@ -237,14 +225,15 @@ export default class Scrollspy extends React.Component {
 		const element = this.props.rootElement? document.querySelector(this.props.rootElement) : window;
 
 		if (element) {
-			element.removeEventListener("scroll", () => this._handleSpy());
+			element.removeEventListener("scroll", this._throttled);
 		}
 	}
 
 	onEvent() {
 		const element = this.props.rootElement? document.querySelector(this.props.rootElement) : window;
+
 		if (element) {
-			element.addEventListener("scroll", () => this._handleSpy());
+			element.addEventListener("scroll", this._throttled);
 		}
 	}
 
