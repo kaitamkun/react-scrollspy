@@ -69,6 +69,7 @@
 		"react-dom": ">=0.14.0"
 	},
 	"dependencies": {
+		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-runtime": "^6.23.0",
 		"classnames": "^2.2.5",
 		"eslint-plugin-flowtype": "^2.35.0",
